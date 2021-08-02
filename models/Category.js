@@ -7,20 +7,9 @@ class Category extends Model {}
 Category.init(
   {
     // define columns
-    shirts: {
-      type: DataTypes.STRING
-    },
-    shorts: {
-      type: DataTypes.STRING
-    },
-    music: {
-      type: DataTypes.STRING
-    },
-    hats: {
-      type: DataTypes.STRING
-    },
-    shoes: {
-      type: DataTypes.STRING
+    category_name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
   },
   {
