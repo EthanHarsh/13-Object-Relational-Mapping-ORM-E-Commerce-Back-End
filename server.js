@@ -17,7 +17,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   dialect: 'mysql'
 });
 
-testConnection()
+testConnection();
+syncModels();
 
 
 app.listen(PORT, () => {
@@ -31,4 +32,9 @@ async function testConnection() {
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
+}
+
+async function syncModels() {
+  await sequelize.sync({ force: true });
+  console.log("All models were synchronized successfully.");
 }
