@@ -1,19 +1,43 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
+const catchAsync = require('../../utils/catchAsync');
+const responder = require('../../utils/responders/responder');
+const postResponder = require('../../utils/responders/postResponder');
+const updateResponder = require('../../utils/responders/updateResponder');
+const deleteResponder = require('../../utils/responders/deleteResponder');
 
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
+router.get('/', catchAsync(async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-});
+  responder(res, await Product.findAll({
+    include: [{
+      model: Category
+    },
+    {
+      model: Tag
+    }]
+  }));
+}));
 
-// get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', catchAsync(async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-});
+  let id = req.params.id;
+  responder(res, await Product.findAll({
+    where: {
+      id: id
+    },
+    include: [{
+      model: Category
+    },
+    {
+      model: Tag
+    }]
+  }));
+}));
 
 // create new product
 router.post('/', (req, res) => {
@@ -89,8 +113,14 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
-});
+router.delete('/:id', catchAsync(async (req, res) => {
+  // delete a product by its `id` value
+  let id = req.params.id;
+  deleteResponder(res, await Product.destroy({
+    where: {
+      id: id
+    }
+  }));
+}));
 
 module.exports = router;

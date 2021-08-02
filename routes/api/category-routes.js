@@ -11,19 +11,26 @@ const deleteResponder = require('../../utils/responders/deleteResponder');
 router.get('/', catchAsync(async (req, res) => {
   // find all categories
   // be sure to include its associated Products
-  responder(res, await Category.findAll());
+  responder(res, await Category.findAll({
+    include: [{
+      model: Product
+    }]
+  }));
 }));
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', catchAsync(async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
   let id = req.params.id;
   responder(res, await Category.findAll({
     where: {
       id: id
-    }
+    },
+    include: [{
+      model: Product
+    }]
   }));
-});
+}));
 
 router.post('/', catchAsync(async (req, res) => {
   // create a new category
