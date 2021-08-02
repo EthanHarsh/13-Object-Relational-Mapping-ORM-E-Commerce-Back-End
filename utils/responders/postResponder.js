@@ -1,5 +1,5 @@
 module.exports = (res, data) => {
-    console.log(data);
+    //console.log(data);
     //console.log(data.dataValues);
     data = data.dataValues;
     if (!data) {
