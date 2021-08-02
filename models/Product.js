@@ -32,7 +32,7 @@ Product.init(
       defaultValue: 10,
     },
     category_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   },
   {
